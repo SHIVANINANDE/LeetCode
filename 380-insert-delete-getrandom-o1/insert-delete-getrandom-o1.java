@@ -1,40 +1,44 @@
 class RandomizedSet {
 
-  private ArrayList<Integer> list;
-    private Map<Integer, Integer> map;
+    List<Integer> nums;
+    Map<Integer, Integer> idxMap;
+    Random random;
 
     public RandomizedSet() {
-        list = new ArrayList<>();
-        map = new HashMap<>();
-    }
-
-    public boolean search(int val) {
-        return map.containsKey(val);
+        nums = new ArrayList<>();
+        idxMap = new HashMap<>();
+        random = new Random();
     }
 
     public boolean insert(int val) {
-        if (search(val)) return false;
+        if (idxMap.containsKey(val)) {
+            return false;
+        }
 
-        list.add(val);
-        map.put(val, list.size() - 1);
+        idxMap.put(val, nums.size());
+        nums.add(val);
         return true;
     }
 
     public boolean remove(int val) {
-        if (!search(val)) return false;
+        if (!idxMap.containsKey(val)) {
+            return false;
+        }
 
-        int index = map.get(val);
-        list.set(index, list.get(list.size() - 1));
-        map.put(list.get(index), index);
-        list.remove(list.size() - 1);
-        map.remove(val);
-
+        int idx = idxMap.get(val);
+        int lastIdx = nums.size() - 1;
+        if (idx != lastIdx) {
+            int lastVal = nums.get(lastIdx);
+            nums.set(idx, lastVal);
+            idxMap.put(lastVal, idx);
+        }
+        nums.remove(lastIdx);
+        idxMap.remove(val);
         return true;
     }
 
     public int getRandom() {
-        Random rand = new Random();
-        return list.get(rand.nextInt(list.size()));
+        return nums.get(random.nextInt(nums.size()));
     }
 }
 
