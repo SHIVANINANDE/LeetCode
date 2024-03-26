@@ -1,34 +1,38 @@
 
 class Solution {
+    public class arComparator implements Comparator<int[]>{
+        public int compare(int[]a, int[]b){
+            int st=Integer.compare(a[0], b[0]);
+            if(st==0){
+                return 0;
+            }
+            return st;
+        }
+    }
     public int[][] merge(int[][] intervals) {
-        int min = Integer.MAX_VALUE;
-		int max = Integer.MIN_VALUE;
-		
-		for (int i = 0; i < intervals.length; i++) {
-			min = Math.min(min, intervals[i][0]);
-			max = Math.max(max, intervals[i][0]);
-		}
-		
-		int[] range = new int[max - min + 1];
-		for (int i = 0; i < intervals.length; i++) {
-			range[intervals[i][0] - min] = Math.max(intervals[i][1] - min, range[intervals[i][0] - min]); 
-		}
-		
-		int start = 0, end = 0;
-		LinkedList<int[]> result = new LinkedList<>();
-		for (int i = 0; i < range.length; i++) {
-			if (range[i] == 0) {
-				continue;
-			}
-			if (i <= end) {
-				end = Math.max(range[i], end);
-			} else {
-				result.add(new int[] {start + min, end + min});
-				start = i;
-				end = range[i];
-			}
-		}
-		result.add(new int[] {start + min, end + min});
-		return result.toArray(new int[result.size()][]);
+        Arrays.sort(intervals, new arComparator());
+        int n = intervals.length;
+        if (n <= 1) {
+            return intervals; // No need to merge if there's only one interval or none
+        }
+        int[][] merged = new int[n][2];
+        int mergedIdx = 0;
+        int i = 0;
+
+        while (i < n) {
+            if (mergedIdx == 0 || merged[mergedIdx - 1][1] < intervals[i][0]) {
+                // Non-overlapping interval or the first interval
+                merged[mergedIdx][0] = intervals[i][0];
+                merged[mergedIdx][1] = intervals[i][1];
+                mergedIdx++;
+            } else {
+                // Overlapping intervals, update the end time of the merged interval
+                merged[mergedIdx - 1][1] = Math.max(merged[mergedIdx - 1][1], intervals[i][1]);
+            }
+            i++;
+        }
+
+        // Return only the merged intervals (trim the extra rows if any)
+        return Arrays.copyOf(merged, mergedIdx);
     }
 }
