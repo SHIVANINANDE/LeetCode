@@ -6,7 +6,8 @@ class Solution {
         String city;
         public Transaction(String line){
 			// split the string and parse it
-            String[] split = line.split(",");
+             String[] split = line.split(",");
+            //String[] split=line.toCharArray();
             name = split[0];
             time = Integer.parseInt(split[1]);
             amount = Integer.parseInt(split[2]);
