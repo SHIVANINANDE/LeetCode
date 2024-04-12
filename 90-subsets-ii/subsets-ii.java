@@ -22,5 +22,4 @@ class Solution {
             tempList.remove(tempList.size() - 1);
         }
     }
-
 }
