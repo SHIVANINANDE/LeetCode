@@ -1,23 +1,27 @@
 class Solution {
     public boolean validPalindrome(String s) {
-        int n = s.length();
-  for (int i = 0; i < n / 2; ++i) {
-    int left = i, right = n - i - 1;
-    if (s.charAt(left) != s.charAt(right)) { // give a last chance
-      // delete char at left
-      if (validSubPalindrome(s, left + 1, right)) return true;
-      // delete char at right
-      return validSubPalindrome(s, left, right - 1);
+        return isPalindrome(s, 0, s.length() - 1, false);
     }
-  }
-  return true;
+    public boolean isPalindrome(final String s, int leftIndex, int rightIndex, final boolean isCharacterDeleted){
+        
+        while(leftIndex < rightIndex){
+            
+            if(s.charAt(leftIndex) != s.charAt(rightIndex)){
+                
+                if(isCharacterDeleted){
+                    return false;
+                }
+                
+				// isPalindrome(s, leftIndex + 1, rightIndex, true) for cases like "ececabbacec" 
+				// isPalindrome(s, leftIndex, rightIndex - 1, true) for cases like "abccbab"
+                return isPalindrome(s, leftIndex + 1, rightIndex, true) || isPalindrome(s, leftIndex, rightIndex - 1, true);
+            }
+            
+            ++leftIndex;
+            --rightIndex;
+            
+        }
+		
+        return true;
     }
-    private boolean validSubPalindrome(String s, int lo, int hi) {
-  int n = hi - lo + 1;
-  for (int i = 0; i < n / 2; ++i) {
-    int left = lo + i, right = hi - i;
-    if (s.charAt(left) != s.charAt(right)) return false;
-  }
-  return true;
-}
 }
