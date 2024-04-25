@@ -1,23 +1,16 @@
 class Solution {
     public void rotate(int[] nums, int k) {
-        Queue<Integer> q1=new LinkedList<>();
-        Queue<Integer> q2=new LinkedList<>();
-        int n=nums.length;
-        k=k%n;
-        int j=n-k-1;
-        for(int i=0;i<=j;i++){
-            q1.add(nums[i]);
-        }
-        for(int i=j+1;i<n;i++){
-            q2.add(nums[i]);
-        }
-        int i=0;
-            while(!q2.isEmpty()){
-                nums[i++]=q2.remove();
-            }
-             while(!q1.isEmpty()){
-                nums[i++]=q1.remove();
-            }
-        
+        k %= nums.length;
+    reverse(nums, 0, nums.length - 1);
+    reverse(nums, 0, k - 1);
+    reverse(nums, k, nums.length - 1);
     }
+    public void reverse(int[] nums, int start, int end) {
+    while (start < end) {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+        start++;
+        end--;
+    }}
 }
