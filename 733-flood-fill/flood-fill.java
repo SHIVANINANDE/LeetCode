@@ -5,17 +5,17 @@ class Solution {
         fill(image, sr, sc, color, image[sr][sc]);
         return image;
     }
-     public void fill(int[][] image, int sr, int sc, int color, int newClr) {
+     public void fill(int[][] image, int sr, int sc, int newcolor, int oldClr) {
     
-        if(sr < 0 || sr >= image.length || sc < 0 || sc >= image[0].length) return;
+        if(sr < 0 || sr >= image.length || sc < 0 || sc >= image[0].length || oldClr != image[sr][sc]) return;
         
-         if(newClr != image[sr][sc]) return;
+        // if(oldClr != image[sr][sc]) return;
        
-        image[sr][sc] = color;
+        image[sr][sc] = newcolor;
        
-        fill(image, sr-1, sc, color, newClr);
-        fill(image, sr+1, sc, color, newClr);
-        fill(image, sr, sc-1, color, newClr);
-        fill(image, sr, sc+1, color, newClr);
+        fill(image, sr-1, sc, newcolor, oldClr);
+        fill(image, sr+1, sc, newcolor, oldClr);
+        fill(image, sr, sc-1, newcolor, oldClr);
+        fill(image, sr, sc+1, newcolor, oldClr);
     }
 }
