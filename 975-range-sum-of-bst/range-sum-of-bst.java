@@ -19,15 +19,17 @@ class Solution {
         if (root == null) {
             return 0;
         }
-
-        
-        int leftSum = rangeSumBST(root.left, low, high);
-        int rightSum = rangeSumBST(root.right, low, high);
-        int currentVal = (root.val >= low && root.val <= high) ? root.val : 0;
-
-
-        return currentVal + leftSum + rightSum;
-
+      
+        if (low <= root.val && root.val <= high) {
+            return root.val + rangeSumBST(root.left, low, high) + rangeSumBST(root.right, low, high);
+        } 
+        else if (root.val < low) {
+            return rangeSumBST(root.right, low, high);
+        } 
+        else {
+            return rangeSumBST(root.left, low, high);
+        }
     }
+    
     
 }
