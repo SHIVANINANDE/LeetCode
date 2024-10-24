@@ -1,19 +1,12 @@
 class Solution {
     public int removeElement(int[] nums, int val) {
-        Queue<Integer> q=new LinkedList<>();
-        int k=0;
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]!=val){
-                q.add(nums[i]);
+        int index = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != val) {
+                nums[index] = nums[i];
+                index++;
             }
         }
-        int i=0;
-       while(!q.isEmpty() && i<nums.length){
-            nums[i]=q.peek();
-            q.remove();
-            k++;
-            i++;
-       }
-       return k;
+        return index;
     }
 }
