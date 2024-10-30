@@ -2,12 +2,12 @@ class RandomizedSet {
 
    private Map<Integer, Integer> valueToIndexMap;
     private List<Integer> values;
-    private Random rand;
+    private Random randomNum;
 
     public RandomizedSet() { // --------------------------------/
         valueToIndexMap = new HashMap<>(); //O(1) average time  /
         values = new ArrayList<>(); //O(1) average time         / -- O(1)
-        rand = new Random(); //O(1) average time                /
+        randomNum = new Random(); //O(1) average time                /
     } //--------------------------------------------------------/
     
     public boolean insert(int val) { //---------------------------/
@@ -39,7 +39,7 @@ class RandomizedSet {
     } //------------------------------------------------------------/
     
     public int getRandom() { //---------------------------------------/
-        int randomIndex = rand.nextInt(values.size()); //O(1) Average /
+        int randomIndex = randomNum.nextInt(values.size()); //O(1) Average /
         return values.get(randomIndex);//O(1) Average
 
 
