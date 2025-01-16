@@ -13,6 +13,9 @@ class Solution {
         jumps=jumps+1;
      }
      return jumps;
+
+     //We are counting the number of ranges
+     
     
     }
 }
