@@ -8,17 +8,15 @@ class Solution {
         while (right < fruits.length) {
             mpp.put(fruits[right], mpp.getOrDefault(fruits[right], 0) + 1);
             
-            if (mpp.size() > 2) {
+            while (mpp.size() > 2) {
                 mpp.put(fruits[left], mpp.get(fruits[left]) - 1);
                 if (mpp.get(fruits[left]) == 0) {
                     mpp.remove(fruits[left]);
                 }
                 left++;
             }
-            if(mpp.size()<=2){
-                maxFruits = Math.max(maxFruits, right - left + 1);
-            }
             
+            maxFruits = Math.max(maxFruits, right - left + 1);
             right++;
         }
         
