@@ -1,26 +1,15 @@
 class Solution {
     public int hIndex(int[] citations) {
+        Arrays.sort(citations);              // ascending
         int n = citations.length;
-        int[] count = new int[n + 1];
-
-        // Count citations
-        for (int citation : citations) {
-            if (citation > n) {
-                count[n]++;
-            } else {
-                count[citation]++;
+        int h = 0;
+        for (int i = 0; i < n; i++) {        // scan from left or right; left is fine
+            int atLeast = n - i;             // papers with >= citations[i]
+            if (citations[i] >= atLeast) {
+                h = atLeast;                 // this is the max possible from here
+                break;                       // earlier i can't give larger h
             }
         }
-
-        // Calculate h-index
-        int total = 0;
-        for (int i = n; i >= 0; i--) {
-            total += count[i];
-            if (total >= i) {
-                return i;
-            }
-        }
-
-        return 0; 
+        return h;
     }
 }
