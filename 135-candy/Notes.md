@@ -1,1 +1,1 @@
-<h2>candy Notes</h2><hr>[ Time taken: 25 m 38 s ]
+<h2>candy Notes</h2><hr>[ Time taken: 13 m 9 s ]
