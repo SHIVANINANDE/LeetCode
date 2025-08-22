@@ -1,21 +1,21 @@
 class Solution {
     public int jump(int[] nums) {
-     int jumps=0;
-     int l=0, r=0;
-     int n=nums.length;
-     while(r<n-1){
-        int farthest=0;
-        for(int i=l;i<=r;i++){
-            farthest=Math.max(farthest, i+nums[i]);
-        }
-        l=r+1;
-        r=farthest;
-        jumps=jumps+1;
-     }
-     return jumps;
+        int start=0;
+        int end=0;
+        int jump=0;
+        
+        while(end<nums.length-1)
+        {
+            int far=0;
+            for(int i=start; i<=end; i++){
+                far=Math.max(far, i+nums[i]);
+            }
+            start=end+1;
+            end=far;
+            jump++;
 
-     //We are counting the number of ranges
-     
-    
+        }
+        return jump;
+        
     }
 }
