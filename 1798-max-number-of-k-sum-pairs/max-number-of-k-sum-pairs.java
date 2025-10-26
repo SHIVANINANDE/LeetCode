@@ -1,20 +1,28 @@
 class Solution {
     public int maxOperations(int[] nums, int k) {
-        Map<Integer, Integer> map = new HashMap<>();
-        int operations = 0;
+        // Sort the array to use two-pointer technique
+        Arrays.sort(nums);
+        int count = 0;
+        int i = 0;
+        int j = nums.length - 1;
 
-        for (int num : nums) {
-            int complement = k - num;
+        while (i < j) {
+            int sum = nums[i] + nums[j];
 
-            // If complement exists in map, we can form a pair
-            if (map.getOrDefault(complement, 0) > 0) {
-                operations++;
-                map.put(complement, map.get(complement) - 1);
+            if (sum == k) {
+                // Found a valid pair
+                count++;
+                i++;
+                j--;
+            } else if (sum > k) {
+                // Too big, move the end pointer
+                j--;
             } else {
-                map.put(num, map.getOrDefault(num, 0) + 1);
+                // Too small, move the start pointer
+                i++;
             }
         }
 
-        return operations;
+        return count;
     }
 }
