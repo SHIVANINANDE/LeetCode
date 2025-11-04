@@ -4,7 +4,7 @@ class Solution {
 
     // iterate through input array using i pointer
     for (int i = 0; i < chars.length;) {
-      final char letter = chars[i]; // current character being compressed
+      char letter = chars[i]; // current character being compressed
       int count = 0; // count of consecutive occurrences of letter
 
       // count consecutive occurrences of letter in input array
