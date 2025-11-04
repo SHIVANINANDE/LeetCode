@@ -19,7 +19,7 @@ class Solution {
       // if count is greater than 1, write count as string to compressed array
       if (count > 1) {
         // convert count to string and iterate over each character in string
-        for (final char c : String.valueOf(count).toCharArray()) {
+        for (char c : String.valueOf(count).toCharArray()) {
           chars[ans++] = c;
         }
       }
