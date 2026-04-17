@@ -1,27 +1,24 @@
 class Solution {
     public boolean validPalindrome(String s) {
-        return isPalindrome(s, 0, s.length() - 1, false);
-    }
-    public boolean isPalindrome(String s, int leftIndex, int rightIndex, boolean isCharacterDeleted){
-        
-        while(leftIndex < rightIndex){
-            
-            if(s.charAt(leftIndex) != s.charAt(rightIndex)){
-                
-                if(isCharacterDeleted){
-                    return false;
-                }
-                
-				// isPalindrome(s, leftIndex + 1, rightIndex, true) for cases like "ececabbacec" 
-				// isPalindrome(s, leftIndex, rightIndex - 1, true) for cases like "abccbab"
-                return isPalindrome(s, leftIndex + 1, rightIndex, true) || isPalindrome(s, leftIndex, rightIndex - 1, true);
+        int i = 0, j = s.length() - 1;
+
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return isPalindrome(s, i + 1, j) || 
+                       isPalindrome(s, i, j - 1);
             }
-            
-            ++leftIndex;
-            --rightIndex;
-            
+            i++;
+            j--;
         }
-		
+        return true;
+    }
+
+    private boolean isPalindrome(String s, int i, int j) {
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) return false;
+            i++;
+            j--;
+        }
         return true;
     }
 }
