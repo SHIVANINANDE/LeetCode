@@ -1,33 +1,40 @@
+import java.util.*;
+
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<List<Integer>> adj=new ArrayList<>();
-        List<Integer> list=new ArrayList<>();
-        int[] indegree=new int[numCourses];
-        for(int i=0; i<numCourses; i++){
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
             adj.add(new ArrayList<>());
         }
-        for(int req[]: prerequisites){
-            int u=req[0];
-            int v=req[1];
-            adj.get(u).add(v);
-            indegree[v]++;
+        
+        int[] inDegree = new int[numCourses];
+        
+        for (int[] pre : prerequisites) {
+            adj.get(pre[1]).add(pre[0]);
+            inDegree[pre[0]]++;
         }
-        Queue<Integer> q=new LinkedList<>();
-        for(int i=0; i<numCourses; i++){
-            if(indegree[i]==0)q.add(i);
+        
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (inDegree[i] == 0) {
+                queue.add(i);
+            }
         }
-        while(!q.isEmpty()){
-            int node=q.poll();
-            list.add(node);
-            for(int it:adj.get(node)){
-                indegree[it]--;
-                if(indegree[it]==0){
-                    q.add(it);
+        
+        int count = 0;
+        while (!queue.isEmpty()) {
+            int curr = queue.poll();
+            count++;
+            
+            for (int nextCourse : adj.get(curr)) {
+                inDegree[nextCourse]--;
+                
+                if (inDegree[nextCourse] == 0) {
+                    queue.add(nextCourse);
                 }
             }
         }
-
-        return list.size()==numCourses;
-
+        
+        return count == numCourses;
     }
 }
