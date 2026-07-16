@@ -1,34 +1,56 @@
 class Solution {
     public String reorganizeString(String s) {
-        HashMap<Character, Integer> freqMap = new HashMap<>();
-        for (char c : s.toCharArray()) {
-            freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
+
+        int[] freq = new int[26];
+
+        for (char ch : s.toCharArray()) {
+            freq[ch - 'a']++;
         }
 
-        PriorityQueue<Character> maxHeap = new PriorityQueue<>((a, b) -> freqMap.get(b) - freqMap.get(a));
-        maxHeap.addAll(freqMap.keySet());
+        int n = s.length();
 
-        StringBuilder res = new StringBuilder();
-        while (maxHeap.size() >= 2) {
-            char char1 = maxHeap.poll();
-            char char2 = maxHeap.poll();
-
-            res.append(char1);
-            res.append(char2);
-
-            freqMap.put(char1, freqMap.get(char1) - 1);
-            freqMap.put(char2, freqMap.get(char2) - 1);
-
-            if (freqMap.get(char1) > 0) maxHeap.add(char1);
-            if (freqMap.get(char2) > 0) maxHeap.add(char2);
+        for (int count : freq) {
+            if (count > (n + 1) / 2) {
+                return "";
+            }
         }
 
-        if (!maxHeap.isEmpty()) {
-            char ch = maxHeap.poll();
-            if (freqMap.get(ch) > 1) return "";
-            res.append(ch);
+        PriorityQueue<int[]> pq = new PriorityQueue<>(
+            (a, b) -> b[1] - a[1]
+        );
+
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] > 0) {
+                pq.offer(new int[]{i, freq[i]});
+            }
         }
 
-        return res.toString();
+        StringBuilder ans = new StringBuilder();
+
+        while (pq.size() >= 2) {
+
+            int[] first = pq.poll();
+            int[] second = pq.poll();
+
+            ans.append((char)(first[0] + 'a'));
+            ans.append((char)(second[0] + 'a'));
+
+            first[1]--;
+            second[1]--;
+
+            if (first[1] > 0) {
+                pq.offer(first);
+            }
+
+            if (second[1] > 0) {
+                pq.offer(second);
+            }
+        }
+
+        if (!pq.isEmpty()) {
+            ans.append((char)(pq.poll()[0] + 'a'));
+        }
+
+        return ans.toString();
     }
 }
